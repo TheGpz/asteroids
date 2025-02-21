@@ -1,9 +1,11 @@
 import pygame
+import sys
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from player import Player
-from circleshape import *
+from circleshape import CircleShape
 from asteroid import Asteroid
-from asteroidfield import *
+from asteroidfield import AsteroidField
+
 
 def main():
     pygame.init()
@@ -35,7 +37,15 @@ def main():
         pygame.Surface.fill(screen, (0,0,0))
         for thing in drawable:
             thing.draw(screen)
+
         updatable.update(dt)
+
+        for each in asteroid:
+            if each.collision(player):
+                print("Game Over!")
+                sys.exit()
+
+
         pygame.display.flip()
         
         #Limite 60 FPS
